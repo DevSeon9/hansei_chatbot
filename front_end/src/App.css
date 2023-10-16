@@ -1,38 +1,34 @@
+/* Hansei Blue : #04447c */
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #FFFFFF;
+  min-height: 8vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
-.App-link {
-  color: #61dafb;
+.Header-img {
+  width: 8vh;
+  height: 8vh;
+  margin: 0;
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Header-logo {
+  font-size: calc(5vmin);
+  font-weight: bold;
+  color: #04447c;
+}
+
+.Chatbot-header {
+  background: white;
+  color: black;
+  width: 100%;
+  height: 100px;
 }
