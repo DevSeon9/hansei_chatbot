@@ -1,29 +1,29 @@
 const express = require('express');
-const axios = require('axios');
-const bodyParser = require('body-parser');
+const openai = require('openai');
+require('dotenv').config(); // .env 파일 로드
+
 const app = express();
+const port = 3000;
 
-const KAKAO_API_URL = 'https://kapi.kakao.com/v1/plusfriend/messages/send';
+app.use(express.json());
 
-app.use(bodyParser.json());
+app.post('/generate-text', async (req, res) => {
+  const { prompt } = req.body;
 
-app.post('/kakao-webhook', async (req, res) => {
-  const { user_key, type, content } = req.body;
+  try {
+    const response = await openai.Completion.create({
+      engine: "text-davinci-002",
+      prompt: prompt,
+      max_tokens: 50,
+    });
 
-  // 카카오톡 메시지 처리 로직을 작성
-
-  const responseMessage = '카카오톡 챗봇 응답 메시지';
-
-  // 카카오톡 챗봇 응답
-  const response = await axios.post(KAKAO_API_URL, {
-    user_key,
-    content: responseMessage,
-  });
-
-  res.status(200).send('OK');
+    const generatedText = response.choices[0].text;
+    res.json({ text: generatedText });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
 });
 
-const port = 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
