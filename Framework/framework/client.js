@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const OPENAI_API_KEY = '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'; // 여기에 올바른 API 키를 넣으세요
+const OPENAI_API_KEY = 'api_code'; // 여기에 올바른 API 키를 넣으세요
 
 async function askGPT(question) {
   try {
