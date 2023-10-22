@@ -87,30 +87,27 @@ async function scrapeUniversitySchedule() {
   }
 }
 
-// 데이터베이스에 학사정보 추가
+// 데이터베이스에 학사정보 추가(이미 존재하는 경우 삽입하지 않음)
+const scheduleQuery = `
+INSERT INTO hansei_schedule (month, date, description) VALUES (?, ?, ?)
+ON DUPLICATE KEY UPDATE month = VALUES(month), date = VALUES(date), description = VALUES(description)
+`;
+
 async function insertScheduleData(data) {
   console.log("Starting insertScheduleData");
 
-  const insertQuery =
-    "INSERT INTO hansei_schedule (month, date, description) VALUES (?, ?, ?)";
-  const insertPromises = data.map((item) => {
-    return new Promise((resolve, reject) => {
-      db.execute(
-        insertQuery,
-        [item.month, item.date, item.description],
-        function (err) {
-          if (err) {
-            console.error("An error occurred while inserting data:", err);
-            reject(err);
-          } else {
-            resolve();
-          }
-        }
-      );
-    });
-  });
+  for (const item of data) {
+    try {
+      await db.execute(scheduleQuery, [
+        item.month,
+        item.date,
+        item.description
+      ]);
+    } catch (err) {
+      console.error("데이터 삽입 중 에러 발생:", err);
+    }
+  }
 
-  await Promise.all(insertPromises);
   console.log("Finished insertScheduleData");
 }
 

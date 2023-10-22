@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS departments (
   CREATE TABLE IF NOT EXISTS detailnum(
     detailnum_id INT AUTO_INCREMENT PRIMARY KEY,
     department_id INT,
-    detail_name VARCHAR(5) NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
+    detail_name VARCHAR(20) NOT NULL,
+    phone_number VARCHAR(30) NOT NULL,
     FOREIGN KEY (department_id) REFERENCES departments(department_id)
 )
 `;
@@ -52,7 +52,7 @@ async function scrapeContactInfo() {
   console.log("Starting scrapeContactInfo");
 
   try {
-    const URL = "https://mp.hansei.ac.kr:447/telephone"; // 웹 페이지 URL을 입력하세요.
+    const URL = "https://mp.hansei.ac.kr:447/telephone";
     const response = await axios.get(URL);
     const $ = cheerio.load(response.data);
 
@@ -64,9 +64,8 @@ async function scrapeContactInfo() {
       $(element)
         .find("dd tbody tr")
         .each((idx, trElement) => {
-          const detailName = $(trElement).find("td").first().text().trim();
-          const phoneNumber = $(trElement).find("th").text().trim();
-
+          const detailName = $(trElement).find("th").first().text().trim();
+          const phoneNumber = $(trElement).find("td a").text().trim();
           contactData.push({
             department: departmentName,
             detail: detailName,
@@ -82,45 +81,47 @@ async function scrapeContactInfo() {
     throw error;
   }
 }
+// 부서 이름을 삽입하는 쿼리 (이미 존재하는 경우 삽입하지 않음)
+const departmentQuery = `
+INSERT INTO departments (department_name) VALUES (?)
+ON DUPLICATE KEY UPDATE department_name = VALUES(department_name)
+`;
+
+// 세부 연락처 정보를 삽입하는 쿼리
+const detailNumQuery = `
+INSERT INTO detailnum (department_id, detail_name, phone_number) VALUES (?, ?, ?)
+`;
 
 // 데이터베이스에 교내연락처 정보 추가
 async function insertContactData(data) {
-  console.log("Starting insertContactData");
+  console.log("Starting insertContactInfo");
 
-  const departmentQuery =
-    "INSERT INTO departments (department_name) VALUES (?) ON DUPLICATE KEY UPDATE department_id=LAST_INSERT_ID(department_id)";
-  const personQuery =
-    "INSERT INTO person (department_id, detail_name, phone_number) VALUES (LAST_INSERT_ID(), ?, ?)";
+  for (const item of data) {
+    try {
+      // 부서 데이터를 삽입하고 department_id를 가져옵니다.
+      const [departmentResult] = await db.execute(departmentQuery, [
+        item.department
+      ]);
+      let departmentId;
+      if (departmentResult.insertId) {
+        departmentId = departmentResult.insertId;
+      } else {
+        // 부서가 이미 존재한다면, 해당 부서의 ID를 가져옵니다.
+        const [existingDepartment] = await db.query(
+          "SELECT department_id FROM departments WHERE department_name = ?",
+          [item.department]
+        );
+        departmentId = existingDepartment[0].department_id;
+      }
 
-  const insertPromises = data.map((item) => {
-    return new Promise(async (resolve, reject) => {
-      // departments 테이블에 데이터 추가
-      db.execute(departmentQuery, [item.department], function (err) {
-        if (err) {
-          console.error(
-            "An error occurred while inserting department data:",
-            err
-          );
-          return reject(err);
-        }
+      // departmentId를 사용하여 detailnum 테이블에 데이터를 삽입합니다.
+      await db.execute(detailNumQuery, [departmentId, item.detail, item.phone]);
+    } catch (err) {
+      console.error("데이터 삽입 중 에러 발생:", err);
+    }
+  }
 
-        // detailnum 테이블에 데이터 추가
-        db.execute(personQuery, [item.detail, item.phone], function (err) {
-          if (err) {
-            console.error(
-              "An error occurred while inserting person data:",
-              err
-            );
-            return reject(err);
-          }
-          resolve();
-        });
-      });
-    });
-  });
-
-  await Promise.all(insertPromises);
-  console.log("Finished insertContactData");
+  console.log("Finished insertContactInfo");
 }
 
 app.get("/update-hanseichatbot", async (req, res) => {
