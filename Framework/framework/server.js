@@ -1,14 +1,15 @@
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const app = express();
 
 app.use(bodyParser.json());
 
+// GPT-3 API 키 설정
 const OPENAI_API_KEY = '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';
 
-// 클라이언트 테스트 서버 라우트 설정
-app.post('/test-ask-gpt', async (req, res) => {
+// 프론트엔드에서 POST 요청을 받아 처리
+app.post('/ask-gpt', async (req, res) => {
   const { question } = req.body;
 
   try {
@@ -20,9 +21,9 @@ app.post('/test-ask-gpt', async (req, res) => {
   }
 });
 
-const testPort = 3001;
-app.listen(testPort, () => {
-  console.log(`Client test server is running on port ${testPort}`);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
 
 // askGPT 함수 정의
@@ -43,17 +44,4 @@ async function askGPT(question) {
     throw new Error('An error occurred while interacting with GPT-3.');
   }
 }
-
-
-
-// MySQL 연결
-// db.connect((err) => {
-//   if (err) {
-//     console.error('MySQL 연결 실패: ' + err.stack);
-//     return;
-//   }
-//   console.log('MySQL 연결 성공');
-// });
-
-// Express 애플리케이션에서 db 변수를 사용하여 MySQL에 쿼리를 실행할 수 있습니다.
 

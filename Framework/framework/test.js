@@ -1,4 +1,4 @@
-const askGPT = require('./client'); // 클라이언트 코드 가져오기
+const askGPT = require('./client');
 
 // 테스트 케이스 1
 askGPT('서울에는 어떤 과학 박물관이 있나요?')
