@@ -114,8 +114,24 @@ async function insertContactData(data) {
         departmentId = existingDepartment[0].department_id;
       }
 
-      // departmentId를 사용하여 detailnum 테이블에 데이터를 삽입합니다.
-      await db.execute(detailNumQuery, [departmentId, item.detail, item.phone]);
+      // 세부 연락처 정보를 확인하고 데이터베이스에 없다면 삽입하거나 업데이트 합니다.
+      const [existingDetail] = await db.query(
+        "SELECT * FROM detailnum WHERE department_id = ? AND detail_name = ?",
+        [departmentId, item.detail]
+      );
+
+      if (existingDetail.length === 0) {
+        await db.execute(detailNumQuery, [
+          departmentId,
+          item.detail,
+          item.phone
+        ]);
+      } else if (existingDetail[0].phone_number !== item.phone) {
+        await db.execute(
+          "UPDATE detailnum SET phone_number = ? WHERE detailnum_id = ?",
+          [item.phone, existingDetail[0].detailnum_id]
+        );
+      }
     } catch (err) {
       console.error("데이터 삽입 중 에러 발생:", err);
     }
@@ -124,24 +140,10 @@ async function insertContactData(data) {
   console.log("Finished insertContactInfo");
 }
 
-// 기존 연락처 정보 삭제 함수
-async function deleteAllContactData() {
-  try {
-    await db.execute("DELETE FROM detailnum");
-    await db.execute("DELETE FROM departments");
-    console.log("All contact data deleted successfully!");
-  } catch (err) {
-    console.error("Error deleting all contact data:", err);
-  }
-}
-
 app.get("/update-hanseichatbot", async (req, res) => {
   console.log("Received request for /update-hanseichatbot");
 
   try {
-    // 기존 연락처 정보 삭제
-    await deleteAllContactData();
-
     // 교내 연락처 정보 업데이트
     const contactData = await scrapeContactInfo();
     if (contactData.length > 0) {
