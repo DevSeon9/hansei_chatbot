@@ -4,7 +4,6 @@ const cheerio = require("cheerio");
 const cron = require("node-cron");
 const mysql = require("mysql2/promise");
 const app = express();
-
 require("dotenv").config();
 
 // MySQL 데이터베이스 연결 설정
@@ -26,12 +25,13 @@ async function initializeDatabase() {
   console.log("MySQL 연결완료");
 
   //학사정보 테이블 생성
+  //PRIMARY KEY (month, date, description) 기본키 설정
   const createScheduleTableQuery = `
     CREATE TABLE IF NOT EXISTS hansei_schedule (
-      id INT AUTO_INCREMENT PRIMARY KEY,
       month VARCHAR(255) NOT NULL,
       date VARCHAR(255) NOT NULL,
-      description VARCHAR(255) NOT NULL
+      description VARCHAR(255) NOT NULL,
+      PRIMARY KEY (month, date, description) 
     )
   `;
 
@@ -45,6 +45,7 @@ async function scrapeUniversitySchedule() {
   try {
     const URL = "https://www.hansei.ac.kr/kor/302/subview.do";
     const response = await axios.get(URL);
+    //원하는 내용만 파싱
     const $ = cheerio.load(response.data);
 
     const scheduleData = [];
@@ -111,10 +112,22 @@ async function insertScheduleData(data) {
   console.log("Finished insertScheduleData");
 }
 
+// 이전 연도 데이터 삭제 함수
+async function deletePreviousYearData() {
+  try {
+    await db.execute("DELETE FROM hansei_schedule");
+    console.log("Previous year data deleted successfully!");
+  } catch (err) {
+    console.error("Error deleting previous year data:", err);
+  }
+}
+
 app.get("/update-hanseichatbot", async (req, res) => {
   console.log("Received request for /update-hanseichatbot");
 
   try {
+    //크롤링 시작 전 이전 연도 데이터 삭제
+    await deletePreviousYearData();
     // 학사 정보 업데이트
     const scheduleData = await scrapeUniversitySchedule();
     if (scheduleData.length > 0) {

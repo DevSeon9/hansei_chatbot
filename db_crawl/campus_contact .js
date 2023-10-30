@@ -124,10 +124,24 @@ async function insertContactData(data) {
   console.log("Finished insertContactInfo");
 }
 
+// 기존 연락처 정보 삭제 함수
+async function deleteAllContactData() {
+  try {
+    await db.execute("DELETE FROM detailnum");
+    await db.execute("DELETE FROM departments");
+    console.log("All contact data deleted successfully!");
+  } catch (err) {
+    console.error("Error deleting all contact data:", err);
+  }
+}
+
 app.get("/update-hanseichatbot", async (req, res) => {
   console.log("Received request for /update-hanseichatbot");
 
   try {
+    // 기존 연락처 정보 삭제
+    await deleteAllContactData();
+
     // 교내 연락처 정보 업데이트
     const contactData = await scrapeContactInfo();
     if (contactData.length > 0) {
@@ -136,7 +150,7 @@ app.get("/update-hanseichatbot", async (req, res) => {
     } else {
       console.warn("No contact data found.");
     }
-    res.send("Schedule and Contact info updated successfully!");
+    res.send("Contact info updated successfully!");
   } catch (error) {
     console.error("An error occurred:", error);
     res.status(500).send("An error occurred: " + error.message);
