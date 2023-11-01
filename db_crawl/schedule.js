@@ -112,13 +112,15 @@ async function insertScheduleData(data) {
   console.log("Finished insertScheduleData");
 }
 
-// 이전 연도 데이터 삭제 함수
+// 이전 데이터 삭제 함수
 async function deletePreviousYearData() {
   try {
     await db.execute("DELETE FROM hansei_schedule");
-    console.log("Previous year data deleted successfully!");
+    // AUTO_INCREMENT 값을 1로 재설정
+    await db.execute("ALTER TABLE hansei_schedule AUTO_INCREMENT = 1");
+    console.log("Previous year data deleted and ID reset successfully!");
   } catch (err) {
-    console.error("Error deleting previous year data:", err);
+    console.error("Error deleting previous year data and resetting ID:", err);
   }
 }
 
