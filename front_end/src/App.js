@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
+
 import hanseiLogo from './image/hanseiLogo.jpg'; //한세대 로고
 import menuButton from './image/menuButton.png'; // 우측상단 더보기버튼
 import headerImg from './image/headerImgDemo.png'; // 중앙 로고
+
 import './App.css';
+import AskedComponent from './AskedComponent.js';
+
 import ChatBot from 'react-simple-chatbot'; // 챗봇 라이브러리
 import {ThemeProvider} from 'styled-components'; // 스타일 삽입 라이브러리
 import axios from 'axios'; // axios api통신 라이브러리
@@ -68,9 +72,7 @@ function App() {
     {
       id: 'component',
       component: (
-        <div className="Chatbot-header">
-          <h2>자주하는 질문</h2>
-        </div>
+        <AskedComponent/>
       ),
       trigger: 'userInput',
     },
@@ -107,7 +109,7 @@ function App() {
   ];
 
   return (
-    <div className="App">
+    <div className="App">      
       <header className="App-header">
         <img 
           src={hanseiLogo} 
@@ -136,7 +138,7 @@ function App() {
             style={{position: 'absolute', top: '0', left: '0'}}
           />
         </button>
-      </header>
+      </header>    
       <ThemeProvider theme = {theme}>
         <ChatBot
           steps = {steps}
