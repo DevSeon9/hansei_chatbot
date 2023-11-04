@@ -1,40 +1,66 @@
 /* Hansei Blue : #04447c */
 
+*{ 
+  margin: 0;
+  padding: 0;
+	-ms-overflow-style:none; /* IE and Edge */
+    scrollbar-width:none; /* Firefox */
+}
+*::-webkit-scrollbar {
+	display:none; /* Chrome , Safari , Opera */
+}
+
+
 .App {
   text-align: center;
+  margin: 0;
 }
 
 .App-header {
   background-color: #FFFFFF;
-  min-height: 8vh;
+  height: 50px;
+  margin: 2px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   position: relative;
-  z-index: 2;
+  border: 0;
 }
 
 .HeaderSide-img {
-  width: 8vh;
-  height: 8vh;
-  margin: 0;
-  padding: 0;
+  width: 50px;
   position: relative;
+}
+.HeaderSide-img-n {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: block;
+}
+.HeaderSide-img-h {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: none;
+}
+.HeaderSide-img-c {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: none;
+}
+.HeaderSide-img:hover .HeaderSide-img-h {
+  display: block;
+}
+.HeaderSide-img:active .HeaderSide-img-c {
+  display: block;
 }
 
 .Header-logo {
   font-size: calc(5vmin);
-}
-
-.Chatbot-header {
-  background: white;
-  color: black;
-  width: 100%;
-  height: 100px;
-}
-
-.rsc {
-  position: relative;
-  z-index: 1;
+  height: 50px;
 }
 
