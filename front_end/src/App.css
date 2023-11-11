@@ -1,5 +1,4 @@
 /* Hansei Blue : #04447c */
-
 *{ 
   margin: 0;
   padding: 0;
@@ -10,12 +9,13 @@
 	display:none; /* Chrome , Safari , Opera */
 }
 
-
+/* ---------------------------------------- */
 .App {
   text-align: center;
   margin: 0;
 }
 
+/* ---------------------------------------- */
 .App-header {
   background-color: #FFFFFF;
   height: 50px;
@@ -29,6 +29,8 @@
 
 .HeaderSide-img {
   width: 50px;
+  top: 0px;
+  left: 0px;
   position: relative;
 }
 .HeaderSide-img-n {
@@ -64,3 +66,15 @@
   height: 50px;
 }
 
+/* ---------------------------------------- */
+.App-Menu {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: black;
+  z-index: 1000;
+  opacity: 0.3;
+  /* display: none; */
+}
