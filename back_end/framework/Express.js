@@ -1,75 +1,109 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
+const cors = require('cors');
+const axios = require('axios');
+const mysql = require('mysql');
+
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
+// MySQL 연결 설정
 const db = mysql.createConnection({
-  host: '127.0.0.1',
-  port: '5000',
-  user: 'root',
-  password: '2486123',
-  database: 'hansei_chatbot'
+  host: '127.0.0.1',        // 여기에 MySQL 호스트 주소를 입력하세요
+  user: 'root',    // 여기에 MySQL 사용자명을 입력하세요
+  password: '2486123',// 여기에 MySQL 암호를 입력하세요
+  database: 'hansei_chatbot',// 여기에 MySQL 데이터베이스명을 입력하세요
 });
 
-// DB에서 자주하는 질문과 대응하는 답변을 가져오는 함수
-function getFAQAnswer(selectedQuestion, callback) {
-  db.query('SELECT answer FROM faq WHERE question = ?', [selectedQuestion], (err, results) => {
-    if (err) {
-      console.error('MySQL 오류:', err);
-      callback('DB 오류');
-    } else if (results.length > 0) {
-      const answer = results[0].answer;
-      callback(answer);
-    } else {
-      callback('대응하는 답변을 찾을 수 없습니다.');
-    }
-  });
-}
-
-// 클라이언트 요청 분기 처리
-app.get('/api/DB', (req, res) => {
-  const selectedQuestion = req.query.selectedQuestion;
-
-  getFAQAnswer(selectedQuestion, (answer) => {
-    res.json({ answer });
-  });
+// MySQL 연결 시도
+db.connect((err) => {
+  if (err) {
+    console.error('MySQL 연결 오류:', err.message);
+  } else {
+    console.log('MySQL 연결 성공');
+  }
 });
+// 미세조정 모델의 이름
+const fineTunedModelName = 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
 
-// ChatGPT 연동을 위한 함수
-async function askGPT(question) {
+// 기본 GPT-3 모델의 엔드포인트
+const gptEndpoint = 'https://api.openai.com/v1/chat/completions';
+
+// OpenAI API 키
+const apiKey = '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';
+
+// GPT-3와 미세조정에 사용할 모델 선택
+const modelToUse = process.env.USE_FINE_TUNED_MODEL === 'true' ? fineTunedModelName : 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
+
+async function askGPT(userInput) {
   try {
-    const response = await axios.post('https://api.openai.com/v1/fine-tuning/jobs', {
-      prompt: question,
-      max_tokens: 50,
-      model: 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw',
-      temperature: 0.1
-    }, {
-      headers: {
-        'Authorization': `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`
+    const response = await axios.post(
+      gptEndpoint,
+      {
+        model: modelToUse,
+        messages: [
+          { role: 'system', content: 'You are a helpful assistant.' },
+          { role: 'user', content: userInput },
+        ],
+        max_tokens: 300,
+        temperature: 0.1,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
       }
-    });
+    );
 
-    const answer = response.data.choices[0].text;
-    return answer;
+    console.log('Raw GPT-3 API Response:', response.data);
+
+    const choices = response.data.choices;
+    
+    if (choices && choices.length > 0 && choices[0].message && choices[0].message.content) {
+      const answer = choices[0].message.content;
+
+      // 백엔드에서 서버 콘솔에 로그를 출력
+      console.log('GPT 응답:', answer);
+      console.log('질문:', userInput);
+      return answer;
+    } else {
+      throw new Error('GPT-3 API에서 올바른 응답을 받지 못했습니다.');
+    }
   } catch (error) {
-    throw new Error('An error occurred while interacting with GPT-3.');
+    console.error('GPT-3와 상호 작용 중 오류 발생:', error.response ? error.response.data : error.message);
+    throw new Error('GPT-3와 상호 작용 중 오류가 발생했습니다.');
   }
 }
+
+
+
 
 app.post('/api/gpt', async (req, res) => {
-  const { question } = req.body;
+  const { userInput } = req.body;
 
   try {
-    const answer = await askGPT(question);
-    res.json({ answer });
+    const answer = await askGPT(userInput);
+    res.json({ message: 'SUCCESS', serverResponse: answer });
+    console.log('응답:', answer);
   } catch (error) {
-    res.status(500).json({ error: 'ChatGPT 오류' });
+    console.error(error);
+    res.status(500).json({ message: '실패', serverResponse: null });
   }
 });
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 const port = 5000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
 });

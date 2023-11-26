@@ -12,13 +12,13 @@ app.use(cors());
 const fineTunedModelName = 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
 
 // 기본 GPT-3 모델의 엔드포인트
-const gptEndpoint = 'https://api.openai.com/v1/completions';
+const gptEndpoint = 'https://api.openai.com/v1/chat/completions';
 
 // OpenAI API 키
 const apiKey = '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';
 
 // GPT-3와 미세조정에 사용할 모델 선택
-const modelToUse = process.env.USE_FINE_TUNED_MODEL === 'true' ? fineTunedModelName : 'text-davinci-003';
+const modelToUse = process.env.USE_FINE_TUNED_MODEL === 'true' ? fineTunedModelName : 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
 
 async function askGPT(userInput) {
   try {
@@ -26,8 +26,11 @@ async function askGPT(userInput) {
       gptEndpoint,
       {
         model: modelToUse,
-        prompt: userInput,
-        max_tokens: 200,
+        messages: [
+          { role: 'system', content: 'You are a helpful assistant.' },
+          { role: 'user', content: userInput },
+        ],
+        max_tokens: 300,
         temperature: 0.1,
       },
       {
@@ -38,17 +41,27 @@ async function askGPT(userInput) {
       }
     );
 
-    const answer = response.data.choices[0].text;
+    console.log('Raw GPT-3 API Response:', response.data);
+
+    const choices = response.data.choices;
     
-    // 백엔드에서 서버 콘솔에 로그를 출력
-    console.log('GPT 응답:', answer);
-    console.log('질문:', userInput);
-    return answer;
+    if (choices && choices.length > 0 && choices[0].text) {
+      const answer = choices[0].text;
+
+      // 백엔드에서 서버 콘솔에 로그를 출력
+      console.log('GPT 응답:', answer);
+      console.log('질문:', userInput);
+      return answer;
+    } else {
+      throw new Error('GPT-3 API에서 올바른 응답을 받지 못했습니다.');
+    }
   } catch (error) {
     console.error('GPT-3와 상호 작용 중 오류 발생:', error.response ? error.response.data : error.message);
     throw new Error('GPT-3와 상호 작용 중 오류가 발생했습니다.');
   }
 }
+
+
 
 app.post('/api/gpt', async (req, res) => {
   const { userInput } = req.body;
