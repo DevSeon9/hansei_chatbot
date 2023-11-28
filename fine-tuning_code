@@ -1,0 +1,47 @@
+!pip install openai
+
+import openai
+
+# https://platform.openai.com/account/api-keys 에서 발급
+openai.api_key = "API_KEY"
+
+# 학습 데이터
+# system 에는 AI의 페르소나 혹은 공통된 답변 규칙등을 설정합니다.
+# user 에는 사용자의 질문이나 요청, 지시를 입력합니다.
+# assistant 에는 사용자의 입력에 따른 모델의 답변을 입력합니다.
+bill_data = [
+    {
+        "messages": [
+            {"role": "system", "content": ""},
+            {"role": "user", "content": ""}
+            {"role": "assistant", "content": ""},
+        ]
+    },
+]
+
+import json
+
+# 위에서 설정한 학습 데이터를 파일로 저장합니다.
+with open("testAPI.jsonl", "w") as json_file:
+    for entry in bill_data:
+        json.dump(entry, json_file)
+        json_file.write('\n')
+
+with open("testAPI.jsonl", "r") as json_file:
+    for line in json_file:
+        print(line)
+
+# 학습 데이터를 OpenAI로 전송합니다.
+openai.File.create(
+    file=open("testAPI.jsonl", "r"),
+    purpose='fine-tune'
+)
+
+# 파인튜닝을 시작합니다.
+# 상세한 옵션은 다음 문서를 참고하세요.
+# https://platform.openai.com/docs/api-reference/fine-tuning/create
+openai.FineTuningJob.create(
+    # 아래 training_file 값을 위의 실행 결과에서 받은 id 값으로 교체
+    training_file="",
+    model="gpt-3.5-turbo"
+)
