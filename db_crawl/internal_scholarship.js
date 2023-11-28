@@ -27,17 +27,17 @@ async function initializeDatabase() {
   const createInternalScholarshipTableQuery = `
   CREATE TABLE IF NOT EXISTS internal_scholarship (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    장학종류 VARCHAR(200) NOT NULL,
-    지급및선발기준 TEXT NOT NULL,
-    비고 TEXT NOT NULL
+    type_info VARCHAR(200) NOT NULL,
+    payment_standard TEXT NOT NULL,
+    note TEXT NOT NULL
   )
 `;
   const createScholarshipCriteriaTableQuery = `
   CREATE TABLE IF NOT EXISTS scholarship_criteria (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    장학종류 VARCHAR(200) NOT NULL,
-    지급및선발기준 TEXT NOT NULL,
-    지급금액 TEXT NOT NULL
+    type_info VARCHAR(200) NOT NULL,
+    payment_standard TEXT NOT NULL,
+    amount TEXT NOT NULL
   )
 `;
 
@@ -132,6 +132,7 @@ async function insertInternalScholarship(data) {
   }
 
   console.log("Finished insertInternalScholarship");
+
 }
 
 async function insertScholarshipCriteria(data) {
@@ -206,11 +207,12 @@ cron.schedule("0 2 * * *", async () => {
 });
 
 // 서버 시작
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, async () => {
   await initializeDatabase();
   console.log(`Server is running on port ${PORT}`);
 });
+
 // 서버 종료 시 이벤트 핸들러
 process.on("SIGINT", async () => {
   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
