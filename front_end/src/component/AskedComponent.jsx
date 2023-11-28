@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-function AskedComponent() {
-    return (
-        <div>
-          <h1>자주하는질문</h1>
-        </div>
-      );
-};
+function FrequentlyAsked(props) {
+  return (
+    <div style={{maxWidth: '500px', maxHeight: '150px', background: 'silver', marginTop: '20px'}}>
+      자주하는 질문 <br/><br/><br/><br/><br/><br/>
+    </div>
+  );
+}
 
-export default AskedComponent;
+export default FrequentlyAsked;
