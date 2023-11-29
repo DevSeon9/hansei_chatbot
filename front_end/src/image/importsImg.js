@@ -8,6 +8,8 @@ import menuButtonHover from './menuButtonHover.png';
 import menuButtonClick from './menuButtonClick.png';
 import headerImg from './headerImg.png';
 import botAvatar from './testBotAvatar.jpg';
+import helpPage from './helpPage.png';
+import sendButton from './sendButton.png';
 
 export const images = {
   hanseiLogo,
@@ -18,4 +20,6 @@ export const images = {
   menuButtonClick,
   headerImg,
   botAvatar,
+  helpPage,
+  sendButton,
 };
