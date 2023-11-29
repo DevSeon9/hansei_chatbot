@@ -1,0 +1,17 @@
+# Node.js 관련
+npm-debug.log
+
+# 에디터/IDE 관련
+*.swp
+*.swo
+*.swn
+*.idea/
+*.vscode/
+*.DS_Store
+*.env
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 기타
+*.log
