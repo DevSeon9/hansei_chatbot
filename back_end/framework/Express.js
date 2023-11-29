@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 const mysql = require('mysql');
+const dotenv = require('dotenv');
+require('dotenv').config();
 
 const app = express();
 
@@ -11,10 +13,11 @@ app.use(cors());
 
 // MySQL 연결 설정
 const db = mysql.createConnection({
-  host: '127.0.0.1',        // 여기에 MySQL 호스트 주소를 입력하세요
-  user: 'root',    // 여기에 MySQL 사용자명을 입력하세요
-  password: '2486123',// 여기에 MySQL 암호를 입력하세요
-  database: 'hansei_chatbot',// 여기에 MySQL 데이터베이스명을 입력하세요
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 // MySQL 연결 시도
@@ -23,19 +26,26 @@ db.connect((err) => {
     console.error('MySQL 연결 오류:', err.message);
   } else {
     console.log('MySQL 연결 성공');
+    // 서버 실행 코드는 연결 성공한 경우에만 실행
+    const port = 5000;
+    app.listen(port, () => {
+      console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
+    });
   }
 });
+
+
 // 미세조정 모델의 이름
-const fineTunedModelName = 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
+const fineTunedModelName = 'ft:gpt-3.5-turbo-0613:personal::8H1tNC8D';
 
 // 기본 GPT-3 모델의 엔드포인트
 const gptEndpoint = 'https://api.openai.com/v1/chat/completions';
 
 // OpenAI API 키
-const apiKey = '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';
+const apiKey = process.env.OPENAI_API_KEY;
 
 // GPT-3와 미세조정에 사용할 모델 선택
-const modelToUse = process.env.USE_FINE_TUNED_MODEL === 'true' ? fineTunedModelName : 'ft:gpt-3.5-turbo-0613:personal::8GIhhLfw';
+const modelToUse = process.env.USE_FINE_TUNED_MODEL === 'true' ? fineTunedModelName : 'ft:gpt-3.5-turbo-0613:personal::8H1tNC8D';
 
 async function askGPT(userInput) {
   try {
@@ -44,7 +54,7 @@ async function askGPT(userInput) {
       {
         model: modelToUse,
         messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
+          { role: 'system', content: '당신은 한세대 챗봇입니다 친절하게 답변해주세요' },
           { role: 'user', content: userInput },
         ],
         max_tokens: 300,
