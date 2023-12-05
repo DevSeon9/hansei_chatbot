@@ -34,6 +34,28 @@ db.connect((err) => {
   }
 });
 
+// 날씨 정보를 저장할 배열
+let weatherData = [];
+
+// 10초마다 아두이노로부터 날씨 정보를 받아 배열에 저장
+setInterval(() => {
+  // 아두이노에서 날씨 정보를 가져오는 로직을 여기에 추가
+
+  // 임의로 날씨 데이터 생성 (테스트용)
+  const newWeatherInfo = {
+    temperature: Math.random() * 30 + 10,
+    humidity: Math.random() * 50 + 30,
+    // 여기에 필요한 다른 날씨 정보 추가
+  };
+
+  // 배열에 추가
+  weatherData.push(newWeatherInfo);
+}, 10000); // 10초마다 실행
+
+// /api/weather 엔드포인트에 GET 요청이 오면 저장된 날씨 데이터를 응답
+app.get('/api/weather', (req, res) => {
+  res.json({ message: 'SUCCESS', weatherData });
+});
 
 // 미세조정 모델의 이름
 const fineTunedModelName = 'ft:gpt-3.5-turbo-0613:personal::8H1tNC8D';
@@ -88,9 +110,6 @@ async function askGPT(userInput) {
   }
 }
 
-
-
-
 app.post('/api/gpt', async (req, res) => {
   const { userInput } = req.body;
 
@@ -112,8 +131,3 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-const port = 5000;
-app.listen(port, () => {
-  console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
-});
