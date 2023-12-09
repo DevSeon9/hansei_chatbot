@@ -139,7 +139,7 @@
 .Menu-HelpPage {
   position: absolute;
   top: 10px;
-  transform: translate(-50%);
+  left: 0;
   overflow: hidden;
   max-width: 100%;
   max-height: 90%;
@@ -149,6 +149,31 @@
   width: auto;
 }
 
+.Menu-CreditButton {
+  position: absolute;
+  bottom: 55px;
+  left: 5px;
+  background: none;
+  border: 1px solid #04447c;
+  color: #04447c;
+}
+.Menu-CreditButton:hover {
+  font-size: 14px;
+}
+.Menu-CreditButton:active {
+  font-size: 12px;
+  color: #04447c;
+}
+
+.Menu-Credit {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 600px;
+  background: white;
+}
+
 /* ---------------------------------------- */
 /* Chatbot Body Component */
 
@@ -156,7 +181,11 @@
   position: static;
   background: #04447c;
   width: 100%;
-  height: calc(100% - 104px);
+  height: calc(100% - 129px);
+}
+
+.Chatbot-Field {
+  max-height: 100%;
   overflow-y: scroll;
 }
 
@@ -189,13 +218,13 @@
 .ChatBubble-Bot {
   border-radius: 0 10px 10px 10px;
   margin-top: 35px;
-  margin-right: 50px;
+  margin-right: 100px;
 }
 .ChatBubble-User {
   border-radius: 10px 0px 10px 10px;
   margin-top: 10px;
   margin-right: 10px;
-  margin-left: 50px;
+  margin-left: 100px;
 }
 
 /* -------------------------------------- */
@@ -234,8 +263,39 @@
 }
 
 /* -------------------------------------- */
+/* Asked Component */
 
 
 
 
 
+
+/* -------------------------------------- */
+/* Weather Component */
+
+.WeatherBar {
+  width: 100%;
+  height: 24px;
+  border-top: 1px solid #04447c;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.WeatherBar-List {
+  width: 20%;
+  height: 24px;
+  padding: 0 5px;
+  background: white;
+  display: flex;
+  justify-content: left;
+  font-size: 15px;
+}
+.WeatherBar-List:hover {
+  
+}
+
+.Weather-Img {
+  width: 24px;
+  height: 24px;
+}
