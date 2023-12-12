@@ -129,5 +129,19 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 204,
 };
+app.post('/api/db', (req, res) => {
+  const userSelect = req.body.userSelect;
+  
+  // 데이터베이스에서 정보를 조회하는 쿼리를 작성합니다.
+  // 이 쿼리는 실제 데이터베이스 구조와 쿼리에 맞게 수정 예정
+  const query = "SELECT * FROM some_table WHERE itemNum = ? AND contentNum = ? AND contentArrayIndex = ?";
 
-app.use(cors(corsOptions));
+  db.query(query, [userSelect.key.itemNum, userSelect.key.contentNum, userSelect.key.contentArrayIndex], (err, result) => {
+    if (err) {
+      console.error('데이터베이스 쿼리 실행 오류:', err.message);
+      res.status(500).json({ message: '실패', serverResponse: null });
+    } else {
+      res.json({ message: 'SUCCESS', serverResponse: result });
+    }
+  });
+});
