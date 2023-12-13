@@ -1,0 +1,128 @@
+bill_data = [
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "신학과 졸업요건?" },
+            { "role": "assistant", "content": "구약, 신약, 조직, 역사, 실천, 선교 총 여섯 과목에서 졸업시험 진행, 과목당 60점 이상 통과, - 금요채플 8학기 중 7학기 이수- 영산목회실습 8학기 중 7학기 이수- *복수전공 이수자 : 금요채플 3학기, 영산목회실습 3학기 이수, 매년 2월에 실시하는 영성수련회 총 4회 참석" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "기독교교육·상담학과 졸업요건?" },
+            { "role": "assistant", "content": "기독교교육, 가족상담 두 과목에서 졸업시험 진행, 과목당 70점 이상 통과, - 금요채플 8학기 중 7학기 이수영산목회실습 8학기 중 7학기 이수 *복수전공 이수자 : 금요채플 3학기, 영산목회실습 3학기 이수, 매년 2월에 실시하는 영성수련회 총 4회 참석" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "미디어영상광고학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업필수과목 이수, 졸업작품 제작 및 발표" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "경영학과 졸업요건?" },
+            { "role": "assistant", "content": "국가공인 자격증 취득 ,졸업필수과목 이수 or 공인된 외국어 시험" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "경찰행정학과 졸업요건?" },
+            { "role": "assistant", "content": "자격증 취득(예외 : 조기졸업자, 졸업연기자, 취업생중 자격증 미취득자는 *졸업시험 통과)" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "국제관광학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업논문(교과목 관광지조사논문 수강) 국가공인 자격증 1개 이상 취득" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "영어학과 졸업요건?" },
+            { "role": "assistant", "content": " 공인영어성적 제출, 자격증 취득, 심화전공 또는 복수전공 이수" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "중국어학과 졸업요건?" },
+            { "role": "assistant", "content": "심화전공 또는 융복합전공 이수, HSK 자격증 취득, 중국 교환학생 파견. 복수전공의 경우 HSK 자격증 취득." }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "컴퓨터공학과 졸업요건?" },
+            { "role": "assistant", "content": "국가공인 자격증 취득 or 졸업프로젝트Ⅰ 이수" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "ICT융합학과 졸업요건?" },
+            { "role": "assistant", "content": "국가공인 자격증 취득 or 졸업프로젝트Ⅰ 이수" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "산업보안학과 졸업요건?" },
+            { "role": "assistant", "content": "자격증 취득 or 졸업시험 " }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "간호학과 졸업요건?" },
+            { "role": "assistant", "content": " 졸업시험 Pass, 졸업논문 Pass 및 교내발표, 핵심기본간호술 인증제 Pass" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "사회복지학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업 필수 교과목 이수, 졸업고사 Pass, 사회복지사2급 자격증 필수 교과목 이수" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "음악학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업연주 Pass, 전공실기 이수, 연주 Ⅰ~Ⅵ 이수, 합주 또는 합창(콘서트콰이어) 이수" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "공연예술학과 졸업요건?" },
+            { "role": "assistant", "content": "'졸업공연' 및‘전공실기 I~VIII' 이수, 공연 참여, 워크숍 참여" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "시각정보디자인학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업작품심사 PASS 및 졸업작품 전시회 참여, 교과목 ‘CEO특강’PASS, 교과목 ‘시각정보디자인전공진로탐색’ PASS" }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "실내건축디자인학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업심사Ⅰ.Ⅱ PASS, ‘창업/취업과 공간환경디자인’이수 " }
+        ]
+    },
+    {
+        "messages": [
+            { "role": "system", "content": "당신은 한세대 챗봇입니다. 친절하게 답변하세요." },
+            { "role": "user", "content": "섬유패션디자인학과 졸업요건?" },
+            { "role": "assistant", "content": "졸업작품심사 및 커리어개발 I Pass, 졸업패션쇼와 전시 참여 필수" }
+        ]
+    }
+]
