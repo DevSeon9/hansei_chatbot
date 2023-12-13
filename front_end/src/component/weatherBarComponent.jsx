@@ -9,12 +9,16 @@ function WeatherBar() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await weatherApiCall(); // 백엔드에서 데이터 가져오기
+      console.log(data);
       setSensorValue(data); // 가져온 데이터로 상태 업데이트
     };
     fetchData(); // 컴포넌트가 마운트되었을 때 초기 데이터 가져오기
     const intervalId = setInterval(fetchData, 10000); // 10초마다 fetchData 실행
     return () => clearInterval(intervalId); // 컴포넌트가 언마운트되면 clearInterval로 인터벌 제거
   }, []);
+
+  // 누적된 최신 데이터를 표시
+  const latestSensorData = sensorValue[sensorValue.length - 1] || {};
 
   return (
     <div className='WeatherBar'>

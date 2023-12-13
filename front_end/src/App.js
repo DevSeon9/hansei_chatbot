@@ -11,8 +11,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header setMenu= {setMenu} menu= {menu}/>
-      {menu && <Menu setMenu= {setMenu} menu= {menu}/>}
+      <Header setMenu= {setMenu} menu= {menu} />
+      {menu && <Menu setMenu= {setMenu} menu= {menu} />}
       <WeatherBar />
       <Chatbot />
     </div>

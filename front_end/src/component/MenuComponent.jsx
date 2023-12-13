@@ -28,27 +28,7 @@ function Menu(props) {
             />
             {isCreditVisible && (
               <div className='Menu-Credit'>
-                <p>
-                  <br/><b>Hansei University<br/>
-                  Software Development Capstone Design<br/><br/>
-                  Hansei-Univ Chatbot Development Project<br/>
-                  Team-3 Debugging</b><br/><br/>
-                  서준성 : Leader / Front-End<br/>
-                  https://github.com/DevSeon9<br/><br/>
-                  김송현 : Front-End<br/>
-                  https://github.com/deveio<br/><br/>
-                  김태영 : GPT Fine-Tuning<br/>
-                  https://github.com/NAS306<br/><br/>
-                  이실환 : Back-End<br/>
-                  https://github.com/josehp24623655<br/><br/>
-                  이현준 : Database<br/>
-                  https://github.com/hyunjun0414<br/><br/>
-                  <a href='https://github.com/DevSeon9/hansei_chatbot' target='_blank'>
-                    https://github.com/DevSeon9/hansei_chatbot
-                  </a>
-                  <br/><br/><br/><br/><br/>
-                  2023/09/06-2023/12/20 
-                </p>
+                <CreditP/>
               </div>
             )}
             <button
@@ -65,3 +45,49 @@ function Menu(props) {
 };
 
 export default Menu;
+
+function CreditP() {
+  return (
+    <p>
+      <br/>
+      <b>
+        Hansei University<br/>
+        Software Development Capstone Design<br/><br/>
+        Hansei-Univ Chatbot Development Project<br/>
+        Team-3 Debugging
+      </b>
+      <br/><br/>
+      서준성 : Leader / Front-End<br/>
+      <a href='https://github.com/DevSeon9' target='_blank'>
+        https://github.com/DevSeon9
+      </a>
+      <br/><br/>
+      김송현 : Front-End<br/>
+      <a href='https://github.com/deveio' target='_blank'>
+        https://github.com/deveio
+      </a>
+      <br/><br/>
+      김태영 : GPT Fine-Tuning / arduino<br/>
+      <a href='https://github.com/NAS306' target='_blank'>
+        https://github.com/NAS306
+      </a>
+      <br/><br/>
+      이실환 : Back-End<br/>
+      <a href='https://github.com/josehp24623655' target='_blank'>
+        https://github.com/josehp24623655
+      </a>
+      <br/><br/>
+      이현준 : Database<br/>
+      <a href='https://github.com/hyunjun0414' target='_blank'>
+        https://github.com/hyunjun0414
+      </a>
+      <br/><br/><br/>
+      Project Page<br/>
+      <a href='https://github.com/DevSeon9/hansei_chatbot' target='_blank'>
+        https://github.com/DevSeon9/hansei_chatbot
+      </a>
+      <br/><br/><br/>
+      2023/09/06-2023/12/20
+    </p>
+  );
+};
