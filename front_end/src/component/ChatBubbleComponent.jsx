@@ -8,7 +8,10 @@ function BotBubble(props) {
       className='ChatBubble-Bubble'
       style={{justifyContent: 'flex-start'}}
     >
-      <div className='ChatBubble-Avator'/>
+      <img
+        src={images.botAvatar}
+        className='ChatBubble-Avator'
+      />
       <div className='ChatBubble-Content ChatBubble-Bot'>
         {props.content} <br/>
         {props.showComponent && <FrequentlyAsked/>}

@@ -1,15 +1,15 @@
 // importsImg.js
 
-import hanseiLogo from './hanseiLogo.jpg';
-import hanseiLogoHover from './hanseiLogoHover.jpg';
-import hanseiLogoClick from './hanseiLogoClick.jpg';
-import menuButton from './menuButton.png';
-import menuButtonHover from './menuButtonHover.png';
-import menuButtonClick from './menuButtonClick.png';
-import headerImg from './headerImg.png';
-import botAvatar from './testBotAvatar.jpg';
-import helpPage from './helpPage.png';
-import sendButton from './sendButton.png';
+import hanseiLogo from './header/hanseiLogo.jpg';
+import hanseiLogoHover from './header/hanseiLogoHover.jpg';
+import hanseiLogoClick from './header/hanseiLogoClick.jpg';
+import menuButton from './header/menuButton.png';
+import menuButtonHover from './header/menuButtonHover.png';
+import menuButtonClick from './header/menuButtonClick.png';
+import headerImg from './header/headerImg.png';
+import botAvatar from './chatbot/testBotAvatar.jpg';
+import helpPage from './helpPage/helpPage.png';
+import sendButton from './chatbot/sendButton.png';
 import fineDust from './weather/fineDust.png';
 import harmfulGas from './weather/harmfulGas.png';
 import humidity from './weather/humidity.png';

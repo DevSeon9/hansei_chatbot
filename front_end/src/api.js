@@ -55,10 +55,10 @@ export const weatherApiCall = async () => { // 날씨정보 업로드 통신
     let response = await axios
     .get('http://localhost:5000/api/weather', {
     });
-    console.log("response server data weather : " + response.data.message);
+    console.log("response server data weather : " + response.data.weatherData);
     if (response.data.message === 'SUCCESS') {
       console.log('gptApiCall() api success');
-      return response.data.serverResponse;
+      return response.data.weatherData;
     } else {
       console.log('weatherApiCall() api errror');
       return ['통신 오류','통신 오류','통신 오류','통신 오류','통신 오류'];
@@ -68,4 +68,5 @@ export const weatherApiCall = async () => { // 날씨정보 업로드 통신
     console.log('weatherApiCall() server error');
     return ['서버 오류','서버 오류','서버 오류','서버 오류','서버 오류'];
   }
-}
+};
+
