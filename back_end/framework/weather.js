@@ -1,4 +1,3 @@
-//현준님 코드
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,33 +15,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 샘플 데이터
-let weatherData = [
-  {
-    temperature: 25.5,
-    humidity: 60,
-    precipitation: 0.0,
-    fineDust: 15,
-    harmfulGas: 5
-  },
-  {
-    temperature: 26.0,
-    humidity: 55,
-    precipitation: 0.2,
-    fineDust: 18,
-    harmfulGas: 6
-  }
-];
+let weatherData = [25.5, 60, 0.0, 15, 5];
 
 // POST 엔드포인트: 아두이노에서 날씨 데이터 받기
 app.post("/api/weather", (req, res) => {
   const data = req.body;
-  weatherData.push(data);
+  // 이전 데이터를 새로운데이터로 대체
+  weatherData[0] = data;
   res.status(200).send("Data received");
 });
 
 // GET 엔드포인트: 저장된 날씨 데이터 반환
 app.get("/api/weather", (req, res) => {
-  res.status(200).json(weatherData);
+  const responseObject = {
+    weatherData: weatherData,
+    message: "SUCCESS"
+  };
+  res.status(200).json(responseObject);
 });
 
 // 기본 경로
