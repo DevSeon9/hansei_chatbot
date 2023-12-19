@@ -40,7 +40,15 @@ db.connect((err) => {
 });
 
 // 날씨 정보를 저장할 배열
-let weatherData = [];
+let weatherData = [25.5, 60, 0.0, 15, 5];
+
+// POST 엔드포인트: 아두이노에서 날씨 데이터 받기
+app.post("/api/weather", (req, res) => {
+  const data = req.body;
+  // 이전 데이터를 새로운데이터로 대체
+  weatherData[0] = data;
+  res.status(200).send("Data received");
+});
 
 // 아두이노에서 날씨 정보를 받아 배열에 저장 (현준님 코드의 POST 엔드포인트)
 app.post("/api/weather", (req, res) => {
