@@ -1,0 +1,302 @@
+/* Hansei Blue : #04447c */
+/* window */
+
+*{ 
+  margin: 0;
+  padding: 0;
+	-ms-overflow-style:none; /* IE and Edge */
+    scrollbar-width:none; /* Firefox */
+}
+*::-webkit-scrollbar {
+	display:none; /* Chrome , Safari , Opera */
+}
+
+.red {
+  color: red;
+  display: inline;
+}
+
+/* ---------------------------------------- */
+/* App Component */
+
+.App {
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  min-width: 300px;
+  min-height: 400px;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---------------------------------------- */
+/* Header Component*/
+
+.Header {
+  background-color: #FFFFFF;
+  height: 50px;
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: static;
+  border: 0;
+}
+
+.Header-Img {
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+  position: relative;
+  display: flex;
+}
+.Header-Img-n {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: block;
+}
+.Header-Img-h {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: none;
+}
+.Header-Img-c {
+  width: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  display: none;
+}
+.Header-Img:hover .Header-Img-h {
+  display: block;
+}
+.Header-Img:active .Header-Img-c {
+  display: block;
+}
+
+.Header-Logo {
+  font-size: calc(5vmin);
+  height: 50px;
+}
+
+/* ---------------------------------------- */
+/* Menu Component */
+
+.Menu {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.Menu-Header  {
+  position: absolute;
+  width: 100vw;
+  height: 100px;
+}
+
+.Menu-Title {
+  color: white;
+}
+
+.Menu-Button {
+  position: absolute;
+  width: 50px;
+  height: 30px;
+  top: 70px;
+  transform: translate(-50%);
+  color: white;
+  background: none;
+  border: 0;
+  font-size: 13px;
+  font-weight: bold;
+}
+.Menu-Button:hover {
+  font-size: 15px;
+}
+.Menu-Button:active {
+  color: silver;
+  font-size: 13px;
+}
+
+.Menu-Body {
+  position: absolute;
+  top: 100px;
+  width: 100vw;
+  height: calc(100vh - 100px);
+}
+
+.Menu-HelpPage {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 90%;
+  min-width: 542px;
+  min-height: 381px;
+  height: auto;
+  width: auto;
+}
+
+.Menu-CreditButton {
+  position: absolute;
+  bottom: 55px;
+  left: 5px;
+  background: none;
+  border: 1px solid #04447c;
+  color: #04447c;
+}
+.Menu-CreditButton:hover {
+  font-size: 14px;
+}
+.Menu-CreditButton:active {
+  font-size: 12px;
+  color: #04447c;
+}
+
+.Menu-Credit {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 200px);
+  width: 400px;
+  height: 600px;
+  background: white;
+}
+
+/* ---------------------------------------- */
+/* Chatbot Body Component */
+
+.Chatbot {
+  position: static;
+  background: #04447c;
+  width: 100%;
+  height: calc(100% - 129px);
+}
+
+.Chatbot-Field {
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+.ChatBubble-Bubble {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.ChatBubble-Avator {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border-radius: 30px;
+  background-color: white;
+}
+
+.ChatBubble-Content {
+  position: relative;
+  word-wrap: break-word;
+  max-width: 85%;
+  min-height: 30px;
+  padding: 5px;
+  border: 10px;
+  background: white;
+  color: black;
+}
+.ChatBubble-Bot {
+  border-radius: 0 10px 10px 10px;
+  margin-top: 35px;
+  margin-right: 100px;
+}
+.ChatBubble-User {
+  border-radius: 10px 0px 10px 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 100px;
+}
+
+/* -------------------------------------- */
+/* Chatbot userinput Component */
+
+.ChatBubble-UserInput {
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+}
+
+.ChatBubble-Inputset {
+  display: flex;
+  width: calc(100% - 55px);
+  border: none;
+  margin: 0 10px;
+}
+
+.ChatBubble-InputButton {
+  background: white;
+  border: 0;
+  width: 60px;
+  height: 50px;
+}
+
+.ChatBubble-SendImg {
+  display: flex;
+  width: 55px;
+  height: 45px;
+}
+.ChatBubble-SendImg:active {
+  width: 50px;
+  height: 40px;
+}
+
+/* -------------------------------------- */
+/* Asked Component */
+
+
+
+
+
+
+/* -------------------------------------- */
+/* Weather Component */
+
+.WeatherBar {
+  width: 100%;
+  height: 24px;
+  border-top: 1px solid #04447c;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.WeatherBar-List {
+  width: 20%;
+  height: 24px;
+  padding: 0 5px;
+  background: white;
+  display: flex;
+  justify-content: left;
+  font-size: 15px;
+  overflow: hidden;
+}
+.WeatherBar-List:hover {
+  
+}
+
+.Weather-Img {
+  width: 24px;
+  height: 24px;
+}
